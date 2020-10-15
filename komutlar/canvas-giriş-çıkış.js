@@ -1,41 +1,34 @@
 const Discord = require("discord.js");
-const db = require("quick.db");
 const ayarlar = require("../ayarlar.json");
+const db = require("quick.db");
+ 
 exports.run = async (client, message, args) => {
   if (!message.member.hasPermission("MANAGE_GUILD"))
     return message.reply(
-      `Bu komutu kullanabilmek için **Sunucuyu Yönet** iznine sahip olmalısın!`
+      `Bu Komutu Kullanabilmek İçin **Yönetici** İznine Sahip Olmalısın!`
     );
-  //'~'Resađ Seferov✨#0809
-  let prefix = ayarlar.prefix;
  
-  if (db.has(`gçkanal_${message.guild.id}` === false)) {
-    const embed = new Discord.RichEmbed()
-      .setDescription(`Giriş çıkışı Ayarlamadığın İçin Sıfırlayamazsın!`)
-      .setColor("RED")
-      .setTimestamp(`Ayarlamak İçin ${prefix}giriş-çıkış-ayarla #kanal`);
-    message.channel.send({ embed });
-    return;
+  let channel = message.mentions.channels.first();
+  if (!channel) {
+    return message.reply("Bir kanal etiketleyin");
   }
-  db.delete(`gçkanal_${message.guild.id}`);
+  db.set(`gçkanal_${message.guild.id}`, channel.id);
+  //var i = db.set(`capsE_${message.guild.id}`, "acik")
  
-  const embed = new Discord.RichEmbed()
-    .setDescription(`Giriş Çıkış Başarıyla Sıfırlandı`)
-    .setColor("RANDOM")
-    .setTimestamp();
-  message.channel.send({ embed });
-  return;
+  message.channel.send(
+    `:white_check_mark: | ** Resimli Hoşgeldin - Güle Güle kanalı ${channel} Olarak Ayarlandı.** `
+  );
 };
  
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: [],
+  aliases: ["hgbb"],
   permLevel: 0
 };
  
 exports.help = {
-  name: "hgbb-kapat",
-  description: "Giriş çıkışı kapatır",
-  usage: "hgbbkapat"
+  name: "hgbb",
+  description: "Giriş Çıkış Kanalını Ayarlar.",
+  usage: "hgbb<#kanal>"
 };
