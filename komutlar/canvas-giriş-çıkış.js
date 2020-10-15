@@ -35,7 +35,7 @@ exports.conf = {
 };
  
 exports.help = {
-  name: "giriş-çıkış-kapat",
+  name: "hgbb-kapat",
   description: "Giriş çıkışı kapatır",
-  usage: "giriş-çıkış-kapat"
+  usage: "hgbbkapat"
 };
